@@ -26,7 +26,8 @@
                     $("#r-date-txt").val(responseJson[1]);
                     $("#rating-txt").val(responseJson[2]);
                     $("#desc-txt").val(responseJson[3]);
-                    console.log(responseJson[0]);
+                    $("#fetch-img").attr('src',responseJson[4]);
+                    console.log(responseJson[4]);
                     // $("#mNameTxt").val(item);
                 });
             });
@@ -47,23 +48,23 @@
             <div class="left-panel">
                 <div class="rowl">
                     <div class="rname">Movie Name:</div>
-                    <div class="rtype"><input type="text" value="Name" class="txt" id="name-txt" name="mName"></div>
+                    <div class="rtype"><input type="text"  class="mxmw"  id="name-txt" name="mName"></div>
                 </div>
                 <div class="rowl">
                     <div class="rname">Release Date:</div>
-                    <div class="rtype"><input type="text" value="Year" class="txt" id="r-date-txt" name="release-date"></div>
+                    <div class="rtype"><input type="text"  class="mxmw" id="r-date-txt" name="release-date"></div>
                 </div>
                 <div class="rowl">
                     <div class="rname">Genre:</div>
-                    <div class="rtype"><input type="text" value="Year" class="txt" id="genre-txt" name="genre"></div>
+                    <div class="rtype"><input type="text"  class="mxmw" id="genre-txt" name="genre"></div>
                 </div>
                 <div class="rowl">
                     <div class="rname">Rating:</div>
-                    <div class="rtype"><input type="text" value="Year" class="txt" id="rating-txt" name="rating"></div>
+                    <div class="rtype"><input type="text" value="Year" class="mxmw"  id="rating-txt" name="rating"></div>
                 </div>
                 <div class="rowr">
                     <div class="rname">Ticket Price:</div>
-                    <div class="rtype"><input type="text" value="Year" name="ticket price"></div>
+                    <div class="rtype"><input type="text" value="Year" class="mxmw" name="ticket price"></div>
                 </div>
                 <div class="rowr btns">
                     <div class="rtype-btn"><input type="button" value="Fetch" id="btn-fetch" onclick="sendRequest(document.getElementsByName('mName')[0].value)"></div>
@@ -74,15 +75,16 @@
             <div class="right-panel">
                 <div class="rowr">
                     <div class="rname">Duration:</div>
-                    <div class="rtype"><input type="text" value="Year" class="txt" id="duration-txt" name="duration"></div>
+                    <div class="rtype"><input type="text" value="Year" class="mxmw" id="duration-txt" name="duration"></div>
                 </div>
                 <div class="rowr">
                     <div class="rname">Description:</div>
-                    <div class="rtype"><input type="text" value="Year" class="txt" id="desc-txt" name="description"></div>
+<%--                    <div class="rtype"><input type="text" value="Year" class="mxmw" id="desc-txt" name="description"></div>--%>
+                    <div class="rtype"><textarea  id="desc-txt" name="description" cols="15" rows="7"></textarea></div>
                 </div>
                 <div class="rowr">
                     <div class="rname">Trailer Url:</div>
-                    <div class="rtype"><input type="text" value="Year" class="txt" id="mxmw"   name="trailer_url"></div>
+                    <div class="rtype" ><input type="text" value="Year"  class="mxmw"  name="trailer_url"></div>
                 </div>
                 <div class="rowr">
                     <div class="rname">Image:</div>

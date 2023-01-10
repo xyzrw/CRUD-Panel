@@ -57,10 +57,10 @@ public class config extends HttpServlet {
                 list.add(jsonObject.getString("release_date"));
                 list.add(String.valueOf(jsonObject.getDouble("vote_average")));
                 list.add(jsonObject.getString("overview"));
-                list.add(jsonObject.getString("poster_path"));
+                list.add("https://image.tmdb.org/t/p/original"+jsonObject.getString("poster_path"));
 
                 String jsonArrRes= new JSONArray(list).toString();
-                System.out.println(jsonObject.getString("title"));
+                System.out.println("https://image.tmdb.org/t/p/original"+jsonObject.getString("poster_path"));
 
 
                 response.setContentType("application/json");
