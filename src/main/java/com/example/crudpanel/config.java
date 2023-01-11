@@ -12,8 +12,10 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +34,10 @@ public class config extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int counter=0;
-        System.out.println("GET RECEIVED");
         if(request.getParameter("mName")!=null){
             mName=request.getParameter("mName").replaceAll("'","");
         }
 
-        System.out.println(mName);
         try{
             if(mName!=null) {
                 HttpRequest getRequest = HttpRequest.newBuilder()
@@ -51,7 +51,6 @@ public class config extends HttpServlet {
                 JSONArray jsonArray = (JSONArray) json.get("results");
                 JSONObject jsonObject = (JSONObject) jsonArray.get(0);
 
-
                 List<String> list=new ArrayList<>();
                 list.add(jsonObject.getString("title"));
                 list.add(jsonObject.getString("release_date"));
@@ -60,8 +59,6 @@ public class config extends HttpServlet {
                 list.add("https://image.tmdb.org/t/p/original"+jsonObject.getString("poster_path"));
 
                 String jsonArrRes= new JSONArray(list).toString();
-                System.out.println("https://image.tmdb.org/t/p/original"+jsonObject.getString("poster_path"));
-
 
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
@@ -77,14 +74,14 @@ public class config extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String mName=request.getParameter("mName");
-        String rDate=request.getParameter("rDate");
+        String mNamePOST=request.getParameter("mName");
+        String rDate=request.getParameter("release-date");
         String genre=request.getParameter("genre");
         String rating=request.getParameter("rating");
-        String ticketPrice=request.getParameter("ticketPrice");
+        String ticketPrice=request.getParameter("ticket-price");
         String duration=request.getParameter("duration");
-        String desc=request.getParameter("desc");
-        String trUrl=request.getParameter("trUrl");
+        String desc=request.getParameter("description");
+        String trUrl=request.getParameter("trailer_url");
 
         /* Receive file uploaded to the Servlet from the HTML5 form */
         Part filePart = request.getPart("file");
@@ -95,7 +92,46 @@ public class config extends HttpServlet {
         response.getWriter().println("The file uploaded successfully.");
         String imgPath="img/" + fileName;
 
-        if(mName!=null && rDate!=null && genre!=null && rating!=null && ticketPrice!=null && duration!=null && desc!=null && trUrl!=null && imgPath!=null){
+        if(mNamePOST==null){
+            System.out.println(mNamePOST+"name");
+        }
+
+        if(rDate==null) {
+            System.out.println(rDate+"rd");
+        }
+
+        if(genre==null) {
+            System.out.println(genre+"genr");
+        }
+
+        if(imgPath==null) {
+            System.out.println(imgPath+"img");
+        }
+
+        if(rating==null) {
+            System.out.println(rating+"rt");
+        }
+
+        if(ticketPrice==null) {
+            System.out.println(ticketPrice+"tk");
+        }
+
+        if(duration==null) {
+            System.out.println(duration+"dr");
+        }
+
+        if(desc==null) {
+            System.out.println(desc+"dsc");
+        }
+
+        if(trUrl==null) {
+            System.out.println(trUrl+"tr");
+        }
+
+
+        if(mNamePOST!=null && rDate!=null && genre!=null && rating!=null && ticketPrice!=null && duration!=null && desc!=null && trUrl!=null){
+
+            System.out.println("passed to sql");
 
             Connection connection=null;
             Statement statement=null;
@@ -103,11 +139,12 @@ public class config extends HttpServlet {
                 Class.forName("com.mysql.jdbc.Driver");
                 connection=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/testmdb","root","");
                 statement=connection.createStatement();
-                String qry="INSERT INTO movies(name,release_date,genre,rating,ticket_price,duration,description,img_path,url) VALUES('"+mName+"' , '"+rDate+"' , '"+genre+"' , '"+rating+"' , '"+ticketPrice+"' , '"+duration+"' , '"+desc+"' ,'"+imgPath+"' , '"+trUrl+"')";
+                String qry="INSERT INTO movies(name,genre,rating,ticket_price,duration,description,img_path,url) VALUES('"+mNamePOST+"' , '"+genre+"' , '"+rating+"' , '"+ticketPrice+"' , '"+duration+"' , '"+desc+"' ,'"+imgPath+"' , '"+trUrl+"')";
                 statement.executeUpdate(qry);
                 response.getWriter().println("Record Inserted");
-            }
-            catch (Exception e) {
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
             }
         }

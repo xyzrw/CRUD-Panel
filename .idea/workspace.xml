@@ -9,7 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3adef5cb-2e83-4054-be52-e32ff1a91d0c" name="Changes" comment="fetch added">
+    <list default="true" id="3adef5cb-2e83-4054-be52-e32ff1a91d0c" name="Changes" comment="panel css fixed">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configUpdate.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/index.css" afterDir="false" />
@@ -19,6 +20,13 @@
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -161,7 +169,12 @@
       <option name="presentableId" value="Default" />
       <updated>1673339428116</updated>
       <workItem from="1673339429218" duration="6641000" />
-      <workItem from="1673346612975" duration="3553000" />
+      <workItem from="1673346612975" duration="3583000" />
+      <workItem from="1673355233922" duration="3516000" />
+      <workItem from="1673370629509" duration="1329000" />
+      <workItem from="1673371992151" duration="5930000" />
+      <workItem from="1673381363951" duration="5581000" />
+      <workItem from="1673417143754" duration="3186000" />
     </task>
     <task id="LOCAL-00001" summary="fetch added">
       <created>1673346532296</created>
@@ -177,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673346559591</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="panel css fixed">
+      <created>1673350184380</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1673350184380</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -185,6 +205,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="fetch added" />
-    <option name="LAST_COMMIT_MESSAGE" value="fetch added" />
+    <MESSAGE value="panel css fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="panel css fixed" />
   </component>
 </project>

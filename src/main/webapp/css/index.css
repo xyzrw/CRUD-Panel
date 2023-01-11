@@ -76,6 +76,12 @@ html, body, html * {
       font-size: 1vw;
   }
 
+#desc-txt2{
+    height:5%;
+    width: 75%;
+    font-size: 1vw;
+}
+
   .left-panel{
     margin-left:15%;
     margin-right:5%;
