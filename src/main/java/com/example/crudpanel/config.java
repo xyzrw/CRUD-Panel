@@ -92,42 +92,6 @@ public class config extends HttpServlet {
         response.getWriter().println("The file uploaded successfully.");
         String imgPath="img/" + fileName;
 
-        if(mNamePOST==null){
-            System.out.println(mNamePOST+"name");
-        }
-
-        if(rDate==null) {
-            System.out.println(rDate+"rd");
-        }
-
-        if(genre==null) {
-            System.out.println(genre+"genr");
-        }
-
-        if(imgPath==null) {
-            System.out.println(imgPath+"img");
-        }
-
-        if(rating==null) {
-            System.out.println(rating+"rt");
-        }
-
-        if(ticketPrice==null) {
-            System.out.println(ticketPrice+"tk");
-        }
-
-        if(duration==null) {
-            System.out.println(duration+"dr");
-        }
-
-        if(desc==null) {
-            System.out.println(desc+"dsc");
-        }
-
-        if(trUrl==null) {
-            System.out.println(trUrl+"tr");
-        }
-
 
         if(mNamePOST!=null && rDate!=null && genre!=null && rating!=null && ticketPrice!=null && duration!=null && desc!=null && trUrl!=null){
 
@@ -139,7 +103,7 @@ public class config extends HttpServlet {
                 Class.forName("com.mysql.jdbc.Driver");
                 connection=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/testmdb","root","");
                 statement=connection.createStatement();
-                String qry="INSERT INTO movies(name,genre,rating,ticket_price,duration,description,img_path,url) VALUES('"+mNamePOST+"' , '"+genre+"' , '"+rating+"' , '"+ticketPrice+"' , '"+duration+"' , '"+desc+"' ,'"+imgPath+"' , '"+trUrl+"')";
+                String qry="INSERT INTO movies(name,genre,rating,ticket_price,duration,description,img_path,url,release_date) VALUES('"+mNamePOST+"' , '"+genre+"' , '"+rating+"' , '"+ticketPrice+"' , '"+duration+"' , '"+desc+"' ,'"+imgPath+"' , '"+trUrl+"', '"+rDate+"')";
                 statement.executeUpdate(qry);
                 response.getWriter().println("Record Inserted");
             } catch (SQLException e) {

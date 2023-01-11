@@ -152,7 +152,7 @@ html, body, html * {
     margin-right: auto;
   }
 
-  #dlt-btn{
+  .dlt-btn{
     height:70%;
     width:100%;
     margin-top: 18%;
@@ -228,14 +228,14 @@ html, body, html * {
   .add-form-uc-div{
   }
 
-  #add-form-uc-submit{
+  .add-form-uc-submit{
     margin-top: 8%;
     height: 2vw;
     color:blue;
     font-size: 0.8vw;
   }
 
-  #text-uc-movie-search{
+  .text-uc-movie-search{
     border:0px none;
     font-size: 1vw;
     height:2.2vw;
@@ -246,7 +246,7 @@ html, body, html * {
     outline: none;
   }
 
-  #submit-uc-search-submit{
+  .submit-uc-search-submit{
     height:100%;
     font-size: 0.8vw;
     height:2.3vw;

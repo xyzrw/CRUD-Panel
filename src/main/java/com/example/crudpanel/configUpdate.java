@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URI;
@@ -24,6 +25,7 @@ import java.util.List;
 )
 public class configUpdate extends HttpServlet {
     String mName="";
+    int mID;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,10 +49,10 @@ public class configUpdate extends HttpServlet {
             String qry="SELECT * FROM movies WHERE name LIKE '"+"%"+mName+"%"+"' ";
             resultSet=statement.executeQuery("SELECT * FROM movies WHERE name LIKE '"+"%"+mName+"%"+"' ");
             resultSet.next();
-            System.out.println(qry);
 
             List<String> list=new ArrayList<>();
 
+            mID=Integer.parseInt(resultSet.getString(1));
             list.add(resultSet.getString(2));
             list.add(resultSet.getString(4));
             list.add(resultSet.getString(5));
@@ -96,16 +98,16 @@ public class configUpdate extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String mNamePOST=request.getParameter("mName2");
-        String rDate=request.getParameter("release-date");
-        String genre=request.getParameter("genre");
-        String rating=request.getParameter("rating");
-        String ticketPrice=request.getParameter("ticket-price");
-        String duration=request.getParameter("duration");
-        String desc=request.getParameter("description");
-        String trUrl=request.getParameter("trailer_url");
+        String rDate=request.getParameter("release-date2");
+        String genre=request.getParameter("genre2");
+        String rating=request.getParameter("rating2");
+        String ticketPrice=request.getParameter("ticket-price2");
+        String duration=request.getParameter("duration2");
+        String desc=request.getParameter("description2");
+        String trUrl=request.getParameter("trailer_url2");
 
         /* Receive file uploaded to the Servlet from the HTML5 form */
-        Part filePart = request.getPart("file");
+        Part filePart = request.getPart("file2");
         String fileName = filePart.getSubmittedFileName();
         for (Part part : request.getParts()) {
             part.write("C:\\Users\\Sandman\\IdeaProjects\\testSrv\\src\\main\\webapp\\images\\" + fileName);
@@ -113,26 +115,24 @@ public class configUpdate extends HttpServlet {
         response.getWriter().println("The file uploaded successfully.");
         String imgPath="img/" + fileName;
 
-        System.out.println(rDate);
-        System.out.println(rating);
-
+        System.out.println(mID);
 
         if(mNamePOST!=null && rDate!=null && genre!=null && rating!=null && ticketPrice!=null && duration!=null && desc!=null && trUrl!=null){
 
-            System.out.println("passed to sql");
-
             Connection connection=null;
             Statement statement=null;
+
             try{
                 Class.forName("com.mysql.jdbc.Driver");
                 connection=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/testmdb","root","");
                 statement=connection.createStatement();
-//                String qry="INSERT INTO movies(name,genre,release_date,rating,ticket_price,duration,description,img_path,url) VALUES('"+mNamePOST+"' , '"+genre+"' ,'"+rDate+"','"+rating+"' , '"+ticketPrice+"' , '"+duration+"' , '"+desc+"' ,'"+imgPath+"' , '"+trUrl+"')";
-//                statement.executeUpdate(qry);
-                response.getWriter().println("Record Inserted");
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            } catch (ClassNotFoundException e) {
+                String qry="UPDATE movies SET name='"+mNamePOST+"',genre='"+genre+"',release_date='"+rDate+"',rating='"+rating+"'," +
+                        "ticket_price='"+ticketPrice+"',duration='"+duration+"',description='"+desc+"',img_path='"+imgPath+"',url='"+trUrl+"',release_date='"+rDate+"'" +
+                        "WHERE id='"+mID+"'";
+                statement.executeUpdate(qry);
+                response.getWriter().println("Record Updated");
+            } catch (Exception e) {
+                System.out.println(e);
                 throw new RuntimeException(e);
             }
         }
