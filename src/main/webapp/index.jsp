@@ -71,13 +71,28 @@
             });
         });
     </script>
+
+    <script>
+        let y=1;
+        $(document).ready(function() {
+            $.post("configNS", function(responseJson) {
+                $.each(responseJson, function(index, item) {
+
+                    $("#dsp-ns-p"+y.toString()).text(item);
+
+                    y++;
+
+                });
+            });
+        });
+    </script>
+
 </head>
 <body>
 <div class="tabs">
     <input type="button" data-tab-target="#add-m" class="active tab" value="Add Movies">
     <input type="button" data-tab-target="#pricing" class="tab" value="home">
     <input type="button" data-tab-target="#about" class="tab" value="home" >
-<%--    onclick="sendRequestXe()"--%>
     <input type="button" data-tab-target="#abou" class="tab" value="home">
 </div>
 
@@ -94,6 +109,10 @@
                     <div class="rname">Release Date:</div>
                     <div class="rtype"><input type="text"  class="mxmw" id="r-date-txt" name="release-date"></div>
                 </div>
+                    <div class="rowr">
+                        <div class="rname">Duration:</div>
+                        <div class="rtype"><input type="text" value="Year" class="mxmw" id="duration-txt" name="duration"></div>
+                    </div>
                 <div class="rowl">
                     <div class="rname">Genre:</div>
                     <div class="rtype"><input type="text"  class="mxmw" id="genre-txt" name="genre"></div>
@@ -113,10 +132,6 @@
                 </div>
             </div>
             <div class="right-panel">
-                <div class="rowr">
-                    <div class="rname">Duration:</div>
-                    <div class="rtype"><input type="text" value="Year" class="mxmw" id="duration-txt" name="duration"></div>
-                </div>
                 <div class="rowr">
                     <div class="rname">Description:</div>
 <%--                    <div class="rtype"><input type="text" value="Year" class="mxmw" id="desc-txt" name="description"></div>--%>
@@ -153,6 +168,10 @@
                         <div class="rname">Release Date:</div>
                         <div class="rtype"><input type="text"  class="mxmw" id="r-date-txt2" name="release-date2"></div>
                     </div>
+                    <div class="rowr">
+                        <div class="rname">Duration:</div>
+                        <div class="rtype"><input type="text" value="Year" class="mxmw" id="duration-txt2" name="duration2"></div>
+                    </div>
                     <div class="rowl">
                         <div class="rname">Genre:</div>
                         <div class="rtype"><input type="text"  class="mxmw" id="genre-txt2" name="genre2"></div>
@@ -172,10 +191,6 @@
                     </div>
             </div>
             <div class="right-panel">
-                <div class="rowr">
-                    <div class="rname">Duration:</div>
-                    <div class="rtype"><input type="text" value="Year" class="mxmw" id="duration-txt2" name="duration2"></div>
-                </div>
                 <div class="rowr">
                     <div class="rname">Description:</div>
                     <%--                    <div class="rtype"><input type="text" value="Year" class="mxmw" id="desc-txt" name="description"></div>--%>
@@ -320,205 +335,234 @@
         </div>
     </div>
 
+    <script>
+        $(document).on("click", "#ns-search-submit", function() {
+            $.get("configNS?sName='"+document.getElementsByName('text-ns-movie')[0].value+"'", function(responseJson) {
+                $.each(responseJson, function(index, item) {
+                    $("#spn-id-ns").text(responseJson[0]);
+                    $("#spn-name-ns").text(responseJson[1]);
+                });
+            });
+        });
+    </script>
+
+
     <div class="panel" id="abou" data-tab-content>
         <div class="inner-panel-upcoming-m">
             <div class="add-uc-movie">
                 <div class="uc-search">
-                    <form action="" method="post" name="form-um">
                         <input type="text" name="text-ns-movie" placeholder="Search..." class="text-uc-movie-search">
-                        <input type="submit" name="submit-uc-search" class="submit-uc-search-submit" value="Search">
-                    </form>
+                        <input type="submit" name="submit-uc-search" class="submit-uc-search-submit" value="Search" id="ns-search-submit">
                 </div>
                 <div class="add-uc">
-                    <div class="add-uc-text-div-id"><p>ID : <span>4000</span></p></div>
-                    <div class="add-uc-text-div"><p>Name : <span>Insterstellar</span></p></div>
+                    <div class="add-uc-text-div-id"><p>ID : <span id="spn-id-ns">4000</span></p></div>
+                    <div class="add-uc-text-div"><p>Name : <span id="spn-name-ns">Insterstellar</span></p></div>
                     <div class="add-form-uc-div">
-                        <form action="" method="post" name="add-form-uc">
+                        <form action="configNS" method="get" name="add-form-uc">
+                            <input type="hidden" name="AddReady" value="1">
                             <input type="submit" name="add-form-uc-submit" value="Add" class="add-form-uc-submit">
                         </form>
                     </div>
                 </div>
             </div>
 
+            <script>
+
+                function sendNsDltRequest(typeName) {
+                    const http = new XMLHttpRequest()
+
+                    http.open("GET", "/configNS?dltRec='" + typeName + "'");
+                    http.send();
+                    http.onload = () => {
+                        if(http.responseText==="1"){
+                            window.alert("Record Deleted Successfully");
+                        }else{
+                            window.alert("Process Failed");
+                        }
+                    };
+                }
+
+            </script>
+
 
             <div class="dsp-svd">
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p1">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p2">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p3">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p4">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p1').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p5">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p6">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p7">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p8">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p5').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p9">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p10">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p11">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p12">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p9').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p13">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p14">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p15">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p16">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p13').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p17">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p18">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p19">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p20">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p17').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p21">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p22">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p23">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p24">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p21').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p25">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p26">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p27">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p28">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p25').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p29">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p30">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p31">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p32">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p29').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p33">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p34">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p35">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p36">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p33').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p37">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p38">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p39">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p40">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p37').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p41">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p42">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p43">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p44">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p41').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p45">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p46">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p47">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p48">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p45').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p49">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p50">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p51">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p52">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p49').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p53">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p54">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p55">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p56">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p53').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p57">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p58">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p59">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p60">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p57').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p61">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p62">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p63">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p64">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p61').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p65">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p66">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p67">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p68">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p65').textContent)">Delete</button>
                     </div>
                 </div>
 
                 <div class="dsp-uc-movie">
-                    <div class="dsp-uc-inner"><p>1</p></div>
-                    <div class="dsp-uc-inner"><p>Interstellar</p></div>
-                    <div class="dsp-uc-inner"><p>2020-06-02</p></div>
-                    <div class="dsp-uc-inner"><p>Sci-fi/Action</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p69">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p70">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p71">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-ns-p72">______</p></div>
                     <div class="dsp-uc-inner dsp-uc-inner-btn">
-                        <button id="dlt-btn" >Delete</button>
+                        <button class="dlt-btn" onclick="sendNsDltRequest(document.getElementById('dsp-ns-p69').textContent)">Delete</button>
                     </div>
                 </div>
 
