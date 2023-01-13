@@ -9,10 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3adef5cb-2e83-4054-be52-e32ff1a91d0c" name="Changes" comment="UC TAB : 1">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configNS.java" afterDir="false" />
+    <list default="true" id="3adef5cb-2e83-4054-be52-e32ff1a91d0c" name="Changes" comment="1.24 1/12">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/config.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configNS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configNS.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configUpdate.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -178,7 +179,14 @@
       <workItem from="1673469075077" duration="6682000" />
       <workItem from="1673498496299" duration="201000" />
       <workItem from="1673499357360" duration="6583000" />
-      <workItem from="1673509990579" duration="32000" />
+      <workItem from="1673509990579" duration="81000" />
+      <workItem from="1673510748023" duration="1539000" />
+      <workItem from="1673606699292" duration="1397000" />
+      <workItem from="1673617106480" duration="98000" />
+      <workItem from="1673618361715" duration="44000" />
+      <workItem from="1673619556465" duration="645000" />
+      <workItem from="1673628771275" duration="2384000" />
+      <workItem from="1673645806424" duration="4056000" />
     </task>
     <task id="LOCAL-00001" summary="fetch added">
       <created>1673346532296</created>
@@ -215,7 +223,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673475712520</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="1.24 1/12">
+      <created>1673510063279</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1673510063279</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -226,6 +241,7 @@
     <MESSAGE value="panel css fixed" />
     <MESSAGE value="Update completed&#10;insert needs a fix" />
     <MESSAGE value="UC TAB : 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="UC TAB : 1" />
+    <MESSAGE value="1.24 1/12" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.24 1/12" />
   </component>
 </project>

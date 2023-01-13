@@ -6,12 +6,14 @@ import jakarta.servlet.annotation.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
 import java.sql.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -31,6 +33,7 @@ import java.util.List;
 public class config extends HttpServlet {
 
     static String mName="";
+    String imgPath;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int counter=0;
@@ -86,14 +89,87 @@ public class config extends HttpServlet {
         /* Receive file uploaded to the Servlet from the HTML5 form */
         Part filePart = request.getPart("file");
         String fileName = filePart.getSubmittedFileName();
-        for (Part part : request.getParts()) {
-            part.write("C:\\Users\\Sandman\\IdeaProjects\\testSrv\\src\\main\\webapp\\images\\" + fileName);
+
+        String home=System.getProperty("user.home");
+        String path= home +File.separator+ "Documents" +File.separator+ "web-img-dir";
+        boolean dirFlag=false;
+        File dir=new File(path);
+
+        if(!dir.exists()){
+            if(dir.mkdir()){
+                System.out.println("Folder Created");
+                dirFlag=true;
+            }
+            else{
+                dirFlag=false;
+                System.out.println("Failed");
+            }
         }
-        response.getWriter().println("The file uploaded successfully.");
-        String imgPath="img/" + fileName;
+        else{
+            dirFlag=true;
+            System.out.println("Folder already exist");
+        }
+
+        if(dirFlag){
+            for (Part part : request.getParts()) {
+                part.write(path +File.separator+ fileName);
+            }
+            response.getWriter().println("The file uploaded successfully.");
+
+            try{
+                File imgFile=new File(path +File.separator+ fileName);
+                byte[] imgBytes = Files.readAllBytes(imgFile.toPath());
+
+                URL url=new URL("https://www.filestackapi.com/api/store/S3?key=AgQ54ULwmQrOkb0OkzeVYz");
+                HttpURLConnection connection=(HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setDoOutput(true);
+
+                connection.setRequestProperty("Content-Type","image/jpeg");
+                connection.setRequestProperty("Content-Length",
+                        Integer.toString(imgBytes.length));
+
+                OutputStream out = connection.getOutputStream();
+                out.write(imgBytes);
+                out.flush();
+                out.close();
+
+                int responseCode=connection.getResponseCode();
+
+                if(responseCode==HttpURLConnection.HTTP_OK){
+                    System.out.println("Success");
+                    BufferedReader br=new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder sb=new StringBuilder();
+                    String line;
+                    while((line=br.readLine())!=null){
+                        sb.append(line).append("\n");
+                    }
+                    br.close();
+
+                    JSONObject resJson=new JSONObject(sb.toString());
+                    System.out.println(resJson.getString("url"));
+                    imgPath=resJson.getString("url");
+                }
+                else{
+                    System.out.println("Response Failed");
+                }
+            }
+
+            catch (Exception e)
+            {
+                throw new RuntimeException(e);
+            }
+
+        }
+        else{
+            response.getWriter().println("Upload Failed");
+        }
 
 
-        if(mNamePOST!=null && rDate!=null && genre!=null && rating!=null && ticketPrice!=null && duration!=null && desc!=null && trUrl!=null){
+
+
+
+        if(mNamePOST!=null && rDate!=null && genre!=null && rating!=null && ticketPrice!=null && duration!=null && desc!=null && trUrl!=null && imgPath!=null){
 
             System.out.println("passed to sql");
 

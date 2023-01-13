@@ -5,6 +5,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.json.JSONArray;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
@@ -32,8 +33,6 @@ public class configNS extends HttpServlet {
             dltRec=request.getParameter("dltRec").replaceAll("'","");
         }
 
-        System.out.println("get");
-        System.out.println(searchName);
         if(dltRec!=null){
 
             try {
@@ -72,6 +71,8 @@ public class configNS extends HttpServlet {
         if(AddReady==null && searchName!=null && searchBlock!=null) {
 
             searchBlock=null;
+            File dr=new File("./img");
+            System.out.println(dr.getCanonicalPath());
 
             try {
                 Connection connection = null;
