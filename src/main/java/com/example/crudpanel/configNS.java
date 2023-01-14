@@ -50,7 +50,6 @@ public class configNS extends HttpServlet {
                     flag=0;
                 }
                 String flagString=flag.toString();
-                System.out.println(flag);
                 response.setContentType("text/plain");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(flagString);
@@ -71,9 +70,6 @@ public class configNS extends HttpServlet {
         if(AddReady==null && searchName!=null && searchBlock!=null) {
 
             searchBlock=null;
-            File dr=new File("./img");
-            System.out.println(dr.getCanonicalPath());
-
             try {
                 Connection connection = null;
                 Statement statement = null;

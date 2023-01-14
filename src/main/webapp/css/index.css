@@ -20,31 +20,41 @@ html, body, html * {
     display: flex;
     justify-content: space-around;
     list-style-type: none;
-    margin: 0;
+    /*margin: 0;*/
     padding: 0;
-    border-bottom: 1px solid black;
+    border: 1px solid black;
+    width:70%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .tab {
     cursor: pointer;
-    padding: 10px;
+    /*padding: 10px;*/
+    height:3vw;
+    width:14vw;
+    font-size: 1vw;
+    border: none;
+    background-color: #BFEAF5;
   }
   
   .tab.active {
-    background-color: #CCC;
+    background-color: #0A2647;
   }
   
   .tab:hover {
-    background-color: #AAA;
+    background-color: #2C74B3;
   }
   
   .tab-content {
     border:1px solid black;
-    width: 60vw;
-    height: 80vh;
+    width: 70vw;
+    height: 90vh;
     margin-left: auto;
     margin-right: auto;
     overflow: scroll;
+    background-color: #F0F5F9;
   }
 
   /* .row{
@@ -68,6 +78,9 @@ html, body, html * {
         height:2vw;
         width: 20vw;
         font-size: 1vw;
+        margin: auto;
+        font-weight: 300;
+        color:#3A4750;
   }
 
   #desc-txt{
@@ -102,30 +115,65 @@ html, body, html * {
     font-size: 1.4vw;
   }
 
-  .rowl{
-    margin-top: 8%;
-  }
-
-  .rowr{
-    margin-top: 5%;
-  }
-
   .btns{
     display: flex;
     flex-direction: row;
+      width:100%
   }
 
   .rtype-btn{
+    font-size:1vw;
     margin-right: 20%;
     margin-top: 2%;
   }
 
-  #btn-fetch,#btn-reset {
-    padding: 20% 60%;
+  .btn-fetch,#btn-reset {
+      font-size:0.8vw;
+    /*padding: 20% 60%;*/
+      padding: 0.5vw 1vw;
+      margin-right: -2vw;
+      border-radius: 15px;
+  }
+  .btn-reset{
+    border:none;
+    cursor: pointer;
+    background-color: #EA5455;
+      color: white;
   }
 
-  #btn-submit{
-    padding: 18% 80%;
+  .btn-reset:active{
+      background-color: white;
+      color: #EA5455;
+  }
+
+  .btn-fetch{
+      border:none;
+      cursor: pointer;
+      background-color:#3D84A8 ;
+      color: white;
+  }
+  .btn-fetch:active{
+      background-color:white ;
+      color: #3D84A8;
+  }
+
+  .btn-submit{
+      font-size:0.8vw;
+    /*padding: 18% 60%;*/
+      padding: 0.5vw 1vw;
+      border:none;
+      cursor: pointer;
+      color: white;
+      background-color:#1FAB89 ;
+      border-radius: 15px;
+  }
+
+  .btn-submit:active{
+      color: #1FAB89;
+      background-color:white ;
+  }
+  .btn-search{
+
   }
 
   .div-img{
@@ -146,22 +194,39 @@ html, body, html * {
     margin-top: 2%;
     display: flex;
     flex-direction: row;
-    border:1px solid black;
+    background-color:white;
     font-size: 1vw;
     margin-left: auto;
     margin-right: auto;
+    border-radius: 15px;
+    border:2px solid #00FFF4;
+    background-image: linear-gradient(
+              90deg,
+              hsl(289, 65%, 64%),
+              hsl(226, 78%, 67%)
+      );
+
   }
 
   .dlt-btn{
     height:70%;
     width:100%;
     margin-top: 18%;
+      border:none;
+      cursor: pointer;
+      color: white;
+      background-color:#F05454 ;
+      border-radius: 15px;
+
+  }
+  .dlt-btn:active{
+      color: #F05454;
+      background-color:white ;
   }
 
   .dsp-svd{
     display: flex;
     flex-direction: column;
-    border:1px solid black;
   }
 
   .dsp-uc-inner{
@@ -196,6 +261,7 @@ html, body, html * {
     width: auto;
     margin-left: 5%;
     margin-right: 5%;
+    margin-top: 4%;
     display: flex;
     flex-direction: row;
   }
@@ -205,7 +271,6 @@ html, body, html * {
   }
 
   .uc-search{
-    border:1px solid black;
     width: 65%;
     margin-left: 20%;
     margin-right: 20%;
@@ -231,11 +296,22 @@ html, body, html * {
   .add-form-uc-submit{
     margin-top: 8%;
     height: 2vw;
-    color:blue;
+    color:white;
     font-size: 0.8vw;
+    width:5vw;
+    border:none;
+    cursor: pointer;
+    background-color:#1FAB89 ;
+    border-radius: 15px;
+  }
+  .add-form-uc-submit:active{
+    color:#1FAB89;
+    background-color:white;
+
   }
 
-  .text-uc-movie-search{
+
+.text-uc-movie-search{
     border:0px none;
     font-size: 1vw;
     height:2.2vw;
@@ -259,6 +335,112 @@ html, body, html * {
   .submit-uc-search-div{
     border:1px solid black;
   }
+
+  .rowl{
+      background-image: linear-gradient(
+              90deg,
+              hsl(289, 65%, 64%),
+              hsl(226, 78%, 67%)
+      );
+      padding:5% 20% 5% 5%;
+      border-radius: 15px;
+      width: 80%;
+      margin-top: 8%;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      color:#232931;
+      font-weight: 350;
+  }
+
+  .rowr{
+    padding:5% 1% 5% 5%;
+      background-image: linear-gradient(
+              90deg,
+              hsl(289, 65%, 64%),
+              hsl(226, 78%, 67%)
+      );
+      border-radius: 15px;
+      width: 80%;
+      margin-top: 5%;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      color:#232931;
+      font-weight: 350;
+  }
+
+  .rowl .rtype{
+    width: 100%;
+    margin-left: -2.8%;
+  }
+
+  .rowl .rname{
+    width: 100%;
+    margin-left: -2.8%;
+  }
+  .rtype{
+      margin-top: 2%;
+
+  }
+
+  .tab-title{
+      text-align: center;
+      width:100%;
+      margin-top:3%;
+      font-size:1vw;
+      /*margin-bottom: -2%;*/
+
+  }
+
+  .tab-title-id{
+      margin-left: 35%;
+      margin-right: 65%;
+      /*margin-right: 50%;*/
+      /*padding:2% 4% 2% 4%;*/
+      background-color: white;
+      width:40%;
+      height:30%;
+      padding-top: 1.5%;
+      padding-bottom: 1.5%;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      border-radius: 15px;
+      color:#232931;
+      font-weight: 350;
+  }
+
+
+
+
+
+.search {
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+
+.searchTerm {
+    width: 100%;
+    border: 5px solid #232931;
+    border-right: none;
+    padding: 5px;
+    height: 30px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #9DBFAF;
+}
+
+.searchTerm:focus{
+    color: #888888;
+}
+
+.searchButton {
+    width: 45px;
+    height: 50px;
+    border: 1px solid #232931;
+    background: #232931;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 30px;
+}
 
 
 

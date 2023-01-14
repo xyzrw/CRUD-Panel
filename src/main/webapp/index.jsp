@@ -9,6 +9,7 @@
     <link href="css/index.css" rel="stylesheet">
     <title>Config Panel</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
     <script>
         function sendRequest(typeName) {
             const http = new XMLHttpRequest()
@@ -73,6 +74,21 @@
     </script>
 
     <script>
+        let z=1;
+        $(document).ready(function() {
+            $.post("configLM", function(responseJson) {
+                $.each(responseJson, function(index, item) {
+
+                    $("#dsp-lp"+z.toString()).text(item);
+
+                    z++;
+
+                });
+            });
+        });
+    </script>
+
+    <script>
         let y=1;
         $(document).ready(function() {
             $.post("configNS", function(responseJson) {
@@ -91,13 +107,15 @@
 <body>
 <div class="tabs">
     <input type="button" data-tab-target="#add-m" class="active tab" value="Add Movies">
-    <input type="button" data-tab-target="#pricing" class="tab" value="home">
-    <input type="button" data-tab-target="#about" class="tab" value="home" >
-    <input type="button" data-tab-target="#abou" class="tab" value="home">
+    <input type="button" data-tab-target="#update-m" class="tab" value="Update Movies">
+    <input type="button" data-tab-target="#latest-m" class="tab" value="Latest Movies">
+    <input type="button" data-tab-target="#upcoming-m" class="tab" value="Upcoming Movies" >
+    <input type="button" data-tab-target="#n-s-m" class="tab" value="Now Showing Movies">
 </div>
 
 <div class="tab-content">
     <div class="panel" id="add-m" data-tab-content class="active">
+        <div class="tab-title"><h2 class="tab-title-id">Add Movies</h2></div>
         <div class="inner-panel">
             <div class="left-panel">
                 <form action="config" method="post" enctype="multipart/form-data">
@@ -109,7 +127,7 @@
                     <div class="rname">Release Date:</div>
                     <div class="rtype"><input type="text"  class="mxmw" id="r-date-txt" name="release-date"></div>
                 </div>
-                    <div class="rowr">
+                    <div class="rowl">
                         <div class="rname">Duration:</div>
                         <div class="rtype"><input type="text" value="Year" class="mxmw" id="duration-txt" name="duration"></div>
                     </div>
@@ -121,14 +139,14 @@
                     <div class="rname">Rating:</div>
                     <div class="rtype"><input type="text" value="Year" class="mxmw"  id="rating-txt" name="rating"></div>
                 </div>
-                <div class="rowr">
+                <div class="rowl">
                     <div class="rname">Ticket Price:</div>
                     <div class="rtype"><input type="text" value="Year" class="mxmw" name="ticket-price"></div>
                 </div>
                 <div class="rowr btns">
-                    <div class="rtype-btn"><input type="button" value="Fetch" id="btn-fetch" onclick="sendRequest(document.getElementsByName('mName')[0].value)"></div>
-                    <div class="rtype-btn"><input type="reset" value="Reset" id="btn-reset"></div>
-                    <div class="rtype-btn"><input type="submit" value="Submit" id="btn-submit"></div>
+                    <div class="rtype-btn"><input type="button" value="Fetch" id="btn-fetch" class="btn-fetch" onclick="sendRequest(document.getElementsByName('mName')[0].value)"></div>
+                    <div class="rtype-btn"><input type="reset" value="Reset" id="btn-reset" class="btn-reset"></div>
+                    <div class="rtype-btn"><input type="submit" value="Submit" id="btn-submit" class="btn-submit"></div>
                 </div>
             </div>
             <div class="right-panel">
@@ -154,9 +172,8 @@
     </div>
 
 
-
-
-    <div class="panel" id="pricing" data-tab-content>
+    <div class="panel" id="update-m" data-tab-content>
+        <div class="tab-title"><h2 class="tab-title-id">Update Movies</h2></div>
         <div class="inner-panel">
             <div class="left-panel">
                 <form action="configUpdate" method="post" enctype="multipart/form-data">
@@ -168,7 +185,7 @@
                         <div class="rname">Release Date:</div>
                         <div class="rtype"><input type="text"  class="mxmw" id="r-date-txt2" name="release-date2"></div>
                     </div>
-                    <div class="rowr">
+                    <div class="rowl">
                         <div class="rname">Duration:</div>
                         <div class="rtype"><input type="text" value="Year" class="mxmw" id="duration-txt2" name="duration2"></div>
                     </div>
@@ -180,14 +197,14 @@
                         <div class="rname">Rating:</div>
                         <div class="rtype"><input type="text" value="Year" class="mxmw"  id="rating-txt2" name="rating2"></div>
                     </div>
-                    <div class="rowr">
+                    <div class="rowl">
                         <div class="rname">Ticket Price:</div>
                         <div class="rtype"><input type="text" value="Year" class="mxmw" id="tkt-txt" name="ticket-price2"></div>
                     </div>
                     <div class="rowr btns">
-                        <div class="rtype-btn"><input type="button" value="Search" id="btn-search"></div>
-                        <div class="rtype-btn"><input type="reset" value="Reset" id="btn-reset"></div>
-                        <div class="rtype-btn"><input type="submit" value="Submit" id="btn-submit"></div>
+                        <div class="rtype-btn"><input type="button" value="Search" class="btn-fetch"></div>
+                        <div class="rtype-btn"><input type="reset" value="Reset" id="btn-reset" class="btn-reset"></div>
+                        <div class="rtype-btn"><input type="submit" value="Submit" id="btn-submit" class="btn-submit"></div>
                     </div>
             </div>
             <div class="right-panel">
@@ -213,6 +230,122 @@
     </div>
 
 
+    <script>
+        $(document).on("click", "#lm-search-submit", function() {
+            $.get("configLM?sName='"+document.getElementsByName('text-l-movie-nm')[0].value+"'", function(responseJson) {
+                $.each(responseJson, function(index, item) {
+                    $("#spn-id-l").text(responseJson[0]);
+                    $("#spn-name-l").text(responseJson[1]);
+                });
+            });
+        });
+    </script>
+
+    <div class="panel" id="latest-m" data-tab-content>
+        <div class="inner-panel-upcoming-m">
+            <div class="add-uc-movie">
+                <div class="uc-search">
+                    <div class="wrap">
+                        <div class="search">
+                            <input type="text" class="searchTerm" name="text-l-movie-nm" placeholder="Search..." >
+                            <button type="submit" class="searchButton" name="submit-uc-search" id="lm-search-submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-uc">
+                    <div class="add-uc-text-div-id"><p>ID : <span id="spn-id-l">____</span></p></div>
+                    <div class="add-uc-text-div"><p>Name : <span id="spn-name-l">____________</span></p></div>
+                    <div class="add-form-uc-div">
+                        <form action="configLM" method="get" name="add-form-uc">
+                            <input type="hidden" name="AddReady" value="1">
+                            <input type="submit" name="add-form-uc-submit" value="Add" class="add-form-uc-submit" >
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                function sendLmDltRequest(typeName) {
+                    const http = new XMLHttpRequest()
+
+                    http.open("GET", "/configLM?dltRec='" + typeName + "'");
+                    http.send();
+                    http.onload = () => {
+                        if(http.responseText==="1"){
+                            window.alert("Record Deleted Successfully");
+                        }else{
+                            window.alert("Process Failed");
+                        }
+                    };
+                }
+
+            </script>
+            <div class="dsp-svd">
+                <div class="dsp-uc-movie">
+                    <div class="dsp-uc-inner"><p id="dsp-lp1">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp2">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp3">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp4">______</p></div>
+                    <div class="dsp-uc-inner dsp-uc-inner-btn">
+                        <button  class="dlt-btn" onclick="sendLmDltRequest(document.getElementById('dsp-lp1').textContent)">Delete</button>
+                    </div>
+                </div>
+
+                <div class="dsp-uc-movie">
+                    <div class="dsp-uc-inner"><p id="dsp-lp5">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp6">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp7">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp8">______</p></div>
+                    <div class="dsp-uc-inner dsp-uc-inner-btn">
+                        <button class="dlt-btn" onclick="sendLmDltRequest(document.getElementById('dsp-lp5').textContent)">Delete</button>
+                    </div>
+                </div>
+
+                <div class="dsp-uc-movie">
+                    <div class="dsp-uc-inner"><p id="dsp-lp9">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp10">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp11">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp12">______</p></div>
+                    <div class="dsp-uc-inner dsp-uc-inner-btn">
+                        <button class="dlt-btn" onclick="sendLmDltRequest(document.getElementById('dsp-lp9').textContent)">Delete</button>
+                    </div>
+                </div>
+
+                <div class="dsp-uc-movie">
+                    <div class="dsp-uc-inner"><p id="dsp-lp13">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp14">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp15">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp16">______</p></div>
+                    <div class="dsp-uc-inner dsp-uc-inner-btn">
+                        <button class="dlt-btn" onclick="sendLmDltRequest(document.getElementById('dsp-lp13').textContent)">Delete</button>
+                    </div>
+                </div>
+
+                <div class="dsp-uc-movie">
+                    <div class="dsp-uc-inner"><p id="dsp-lp17">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp18">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp19">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp20">______</p></div>
+                    <div class="dsp-uc-inner dsp-uc-inner-btn">
+                        <button class="dlt-btn" onclick="sendLmDltRequest(document.getElementById('dsp-lp17').textContent)">Delete</button>
+                    </div>
+                </div>
+
+                <div class="dsp-uc-movie">
+                    <div class="dsp-uc-inner"><p id="dsp-lp21">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp22">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp23">______</p></div>
+                    <div class="dsp-uc-inner"><p id="dsp-lp24">______</p></div>
+                    <div class="dsp-uc-inner dsp-uc-inner-btn">
+                        <button class="dlt-btn" onclick="sendLmDltRequest(document.getElementById('dsp-lp21').textContent)">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         $(document).on("click", "#ucm-search-submit", function() {
@@ -225,12 +358,18 @@
         });
     </script>
 
-    <div class="panel" id="about" data-tab-content>
+    <div class="panel" id="upcoming-m" data-tab-content>
         <div class="inner-panel-upcoming-m">
             <div class="add-uc-movie">
                 <div class="uc-search">
-                        <input type="text" name="text-uc-movie-nm" placeholder="Search..." class="text-uc-movie-search" id="text-uc-movie-id">
-                        <input type="button" name="submit-uc-search" class="submit-uc-search-submit" value="Search" id="ucm-search-submit">
+                    <div class="wrap">
+                        <div class="search">
+                            <input type="text" class="searchTerm" name="text-uc-movie-nm" placeholder="Search..."  id="text-uc-movie-id">
+                            <button type="submit" class="searchButton" name="submit-uc-search" id="ucm-search-submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="add-uc">
                     <div class="add-uc-text-div-id"><p>ID : <span id="spn-id-uc">____</span></p></div>
@@ -238,24 +377,13 @@
                     <div class="add-form-uc-div">
                         <form action="configUM" method="get" name="add-form-uc">
                             <input type="hidden" name="AddReady" value="1">
-                            <input type="submit" name="add-form-uc-submit" value="Add" class="add-form-uc-submit">
+                            <input type="submit" name="add-form-uc-submit" value="Add" class="add-form-uc-submit" >
                         </form>
                     </div>
                 </div>
             </div>
 
             <script>
-                // $(document).on("click", "#dlt-btn1", function() {
-                //     $.get("configUM?dltRec='"+document.getElementById('dsp-p1').textContent+"'", function(responseJson) {
-                //         if(responseJson==="1"){
-                //             window.alert("Record Deleted Successfully");
-                //         }
-                //         else{
-                //             window.alert("Process Failed");
-                //         }
-                //     });
-                // });
-
                 function sendDltRequest(typeName) {
                     const http = new XMLHttpRequest()
 
@@ -346,13 +474,18 @@
         });
     </script>
 
-
-    <div class="panel" id="abou" data-tab-content>
+    <div class="panel" id="n-s-m" data-tab-content>
         <div class="inner-panel-upcoming-m">
             <div class="add-uc-movie">
                 <div class="uc-search">
-                        <input type="text" name="text-ns-movie" placeholder="Search..." class="text-uc-movie-search">
-                        <input type="submit" name="submit-uc-search" class="submit-uc-search-submit" value="Search" id="ns-search-submit">
+                    <div class="wrap">
+                        <div class="search">
+                            <input type="text" class="searchTerm"  placeholder="Search..."  name="text-ns-movie">
+                            <button type="submit" class="searchButton" name="submit-uc-search"  id="ns-search-submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 <div class="add-uc">
                     <div class="add-uc-text-div-id"><p>ID : <span id="spn-id-ns">4000</span></p></div>

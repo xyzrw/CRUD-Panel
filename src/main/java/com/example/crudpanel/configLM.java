@@ -6,14 +6,12 @@ import jakarta.servlet.annotation.*;
 import org.json.JSONArray;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet(name = "configUM", value = "/configUM")
-
-public class configUM extends HttpServlet {
+@WebServlet(name = "configLM", value = "/configLM")
+public class configLM extends HttpServlet {
     String searchName;
     int mID;
     String AddReady;
@@ -21,6 +19,8 @@ public class configUM extends HttpServlet {
     String searchBlock;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        System.out.println("GET RECIEVED");
 
         if(request.getParameter("sName")!=null){
             searchName=request.getParameter("sName").replaceAll("'","");
@@ -32,6 +32,7 @@ public class configUM extends HttpServlet {
         }
         if(request.getParameter("dltRec")!=null){
             dltRec=request.getParameter("dltRec").replaceAll("'","");
+            System.out.println("dlt rec is "+dltRec);
         }
 
         if(dltRec!=null){
@@ -45,7 +46,7 @@ public class configUM extends HttpServlet {
                 statement = connection.createStatement();
 
                 Integer flag;
-                flag=statement.executeUpdate("DELETE FROM upcoming_movies WHERE id = '" +Integer.parseInt(dltRec)+ "' ");
+                flag=statement.executeUpdate("DELETE FROM latest_movies WHERE id = '" +Integer.parseInt(dltRec)+ "' ");
 
                 if(flag!=1){
                     flag=0;
@@ -122,7 +123,11 @@ public class configUM extends HttpServlet {
 
                 Integer val;
 
-                val=statement.executeUpdate("INSERT INTO upcoming_movies VALUES('"+mID+"')");
+                val=statement.executeUpdate("INSERT INTO latest_movies VALUES('"+mID+"')");
+
+                if(val!=1){
+                    val=0;
+                }
 
                 if(val==1){
                     response.getWriter().println("RECORD ADDED");
@@ -158,7 +163,7 @@ public class configUM extends HttpServlet {
             connection=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/testmdb","root","");
             statement=connection.createStatement();
 
-            resultSet=statement.executeQuery("SELECT movies.id,movies.name,movies.release_date,movies.genre FROM movies INNER JOIN upcoming_movies ON movies.id=upcoming_movies.id");
+            resultSet=statement.executeQuery("SELECT movies.id,movies.name,movies.release_date,movies.genre FROM movies INNER JOIN latest_movies ON movies.id=latest_movies.id");
 
             List<String> listPost=new ArrayList<>();
 

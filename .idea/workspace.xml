@@ -9,11 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3adef5cb-2e83-4054-be52-e32ff1a91d0c" name="Changes" comment="1.24 1/12">
+    <list default="true" id="3adef5cb-2e83-4054-be52-e32ff1a91d0c" name="Changes" comment="File Upload Api">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configLM.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configNS.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configNS.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configUpdate.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configUM.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/configUM.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/index.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -186,7 +188,14 @@
       <workItem from="1673618361715" duration="44000" />
       <workItem from="1673619556465" duration="645000" />
       <workItem from="1673628771275" duration="2384000" />
-      <workItem from="1673645806424" duration="4056000" />
+      <workItem from="1673645806424" duration="4166000" />
+      <workItem from="1673671771828" duration="28000" />
+      <workItem from="1673675734306" duration="3171000" />
+      <workItem from="1673685922486" duration="887000" />
+      <workItem from="1673688318812" duration="3423000" />
+      <workItem from="1673705778983" duration="2713000" />
+      <workItem from="1673708555150" duration="9376000" />
+      <workItem from="1673723814103" duration="6900000" />
     </task>
     <task id="LOCAL-00001" summary="fetch added">
       <created>1673346532296</created>
@@ -230,7 +239,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673510063279</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="File Upload Api">
+      <created>1673650011028</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1673650011028</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,6 +258,7 @@
     <MESSAGE value="Update completed&#10;insert needs a fix" />
     <MESSAGE value="UC TAB : 1" />
     <MESSAGE value="1.24 1/12" />
-    <option name="LAST_COMMIT_MESSAGE" value="1.24 1/12" />
+    <MESSAGE value="File Upload Api" />
+    <option name="LAST_COMMIT_MESSAGE" value="File Upload Api" />
   </component>
 </project>
