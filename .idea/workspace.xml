@@ -9,9 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3adef5cb-2e83-4054-be52-e32ff1a91d0c" name="Changes" comment="Frontend Updated">
+    <list default="true" id="3adef5cb-2e83-4054-be52-e32ff1a91d0c" name="Changes" comment="Done 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/crudpanel/config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/css/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/css/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/webapp/index.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
     </list>
@@ -193,7 +192,7 @@
       <workItem from="1673688318812" duration="3423000" />
       <workItem from="1673705778983" duration="2713000" />
       <workItem from="1673708555150" duration="9376000" />
-      <workItem from="1673723814103" duration="17134000" />
+      <workItem from="1673723814103" duration="18501000" />
     </task>
     <task id="LOCAL-00001" summary="fetch added">
       <created>1673346532296</created>
@@ -251,7 +250,14 @@
       <option name="project" value="LOCAL" />
       <updated>1673731145969</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Done 1">
+      <created>1673741337726</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1673741337726</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -265,6 +271,7 @@
     <MESSAGE value="1.24 1/12" />
     <MESSAGE value="File Upload Api" />
     <MESSAGE value="Frontend Updated" />
-    <option name="LAST_COMMIT_MESSAGE" value="Frontend Updated" />
+    <MESSAGE value="Done 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="Done 1" />
   </component>
 </project>

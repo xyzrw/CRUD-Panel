@@ -109,7 +109,7 @@
 </div>
 
 <div class="tab-content">
-    <div class="panel" id="add-m" data-tab-content class="active">
+    <div class="panel active" id="add-m" data-tab-content class="active">
         <div class="tab-title"><h2 class="tab-title-id">Add Movies</h2></div>
         <div class="inner-panel">
             <div class="left-panel">
