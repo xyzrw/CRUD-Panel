@@ -99,55 +99,53 @@ public class configUpdate extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String mNamePOST=request.getParameter("mName2");
-        String rDate=request.getParameter("release-date2");
-        String genre=request.getParameter("genre2");
-        String rating=request.getParameter("rating2");
-        String ticketPrice=request.getParameter("ticket-price2");
-        String duration=request.getParameter("duration2");
-        String desc=request.getParameter("description2");
-        String trUrl=request.getParameter("trailer_url2");
+        String mNamePOST = request.getParameter("mName2");
+        String rDate = request.getParameter("release-date2");
+        String genre = request.getParameter("genre2");
+        String rating = request.getParameter("rating2");
+        String ticketPrice = request.getParameter("ticket-price2");
+        String duration = request.getParameter("duration2");
+        String desc = request.getParameter("description2");
+        String trUrl = request.getParameter("trailer_url2");
 
 
         Part filePart = request.getPart("file2");
         String fileName = filePart.getSubmittedFileName();
 
-        String home=System.getProperty("user.home");
-        String path= home +File.separator+ "Documents" +File.separator+ "web-img-dir";
-        boolean dirFlag=false;
-        File dir=new File(path);
+        String home = System.getProperty("user.home");
+        String path = home + File.separator + "Documents" + File.separator + "web-img-dir";
+        boolean dirFlag = false;
+        File dir = new File(path);
 
-        if(!dir.exists()){
-            if(dir.mkdir()){
+        if (!dir.exists()) {
+            if (dir.mkdir()) {
                 System.out.println("Folder Created");
-                dirFlag=true;
-            }
-            else{
-                dirFlag=false;
+                dirFlag = true;
+            } else {
+                dirFlag = false;
                 System.out.println("Failed");
             }
-        }
-        else{
-            dirFlag=true;
+        } else {
+            dirFlag = true;
             System.out.println("Folder already exist");
         }
 
-        if(dirFlag){
+        if (dirFlag) {
             for (Part part : request.getParts()) {
-                part.write(path +File.separator+ fileName);
+                part.write(path + File.separator + fileName);
             }
-            response.getWriter().println("The file uploaded successfully.");
+            response.getWriter().println("<h1 style='color:green;text-align=center;font-family:Arial;'><center>--FILE WRITE SUCCESS--</center></h1>");
 
-            try{
-                File imgFile=new File(path +File.separator+ fileName);
+            try {
+                File imgFile = new File(path + File.separator + fileName);
                 byte[] imgBytes = Files.readAllBytes(imgFile.toPath());
 
-                URL url=new URL("https://www.filestackapi.com/api/store/S3?key=AgQ54ULwmQrOkb0OkzeVYz");
-                HttpURLConnection connection=(HttpURLConnection) url.openConnection();
+                URL url = new URL("https://www.filestackapi.com/api/store/S3?key=AgQ54ULwmQrOkb0OkzeVYz");
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("POST");
                 connection.setDoOutput(true);
 
-                connection.setRequestProperty("Content-Type","image/jpeg");
+                connection.setRequestProperty("Content-Type", "image/jpeg");
                 connection.setRequestProperty("Content-Length",
                         Integer.toString(imgBytes.length));
 
@@ -156,56 +154,63 @@ public class configUpdate extends HttpServlet {
                 out.flush();
                 out.close();
 
-                int responseCode=connection.getResponseCode();
+                int responseCode = connection.getResponseCode();
 
-                if(responseCode==HttpURLConnection.HTTP_OK){
+                if (responseCode == HttpURLConnection.HTTP_OK) {
                     System.out.println("Success");
-                    BufferedReader br=new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    StringBuilder sb=new StringBuilder();
+                    BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    StringBuilder sb = new StringBuilder();
                     String line;
-                    while((line=br.readLine())!=null){
+                    while ((line = br.readLine()) != null) {
                         sb.append(line).append("\n");
                     }
                     br.close();
 
-                    JSONObject resJson=new JSONObject(sb.toString());
+                    JSONObject resJson = new JSONObject(sb.toString());
                     System.out.println(resJson.getString("url"));
-                    imgPath=resJson.getString("url");
-                }
-                else{
+                    imgPath = resJson.getString("url");
+                    response.getWriter().println("<h1 style='color:green;text-align=center;font-family:Arial;'><center>--FILE SUCCESSFULLY UPLOADED--</center></h1>");
+                } else {
                     System.out.println("Response Failed");
+                    response.getWriter().println("<h1 style='color:red;text-align=center;font-family:Arial;'><center>--RESPONSE FAILED--</center></h1>");
                 }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
 
-            catch (Exception e)
-            {
+        } else {
+            response.getWriter().println("<h1 style='color:red;text-align=center;font-family:Arial;'><center>--WRITE FAILED--</center></h1>");
+        }
+
+
+        int flag = 0;
+        if (mNamePOST != null && rDate != null && genre != null && rating != null && ticketPrice != null && duration != null && desc != null && trUrl != null && imgPath != null) {
+
+            Connection connection = null;
+            Statement statement = null;
+
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/testmdb", "root", "");
+                statement = connection.createStatement();
+                String qry = "UPDATE movies SET name='" + mNamePOST + "',genre='" + genre + "',release_date='" + rDate + "',rating='" + rating + "'," +
+                        "ticket_price='" + ticketPrice + "',duration='" + duration + "',description='" + desc + "',img_path='" + imgPath + "',url='" + trUrl + "',release_date='" + rDate + "'" +
+                        "WHERE id='" + mID + "'";
+                flag = statement.executeUpdate(qry);
+            } catch (Exception e) {
                 throw new RuntimeException(e);
+            } finally {
+                if (flag == 1) {
+                    response.getWriter().println("<h1 style='color:green;text-align=center;font-family:Arial;'><center>--RECORD UPDATED--</center></h1>");
+                } else {
+                    response.getWriter().println("<h1 style='color:red;text-align=center;font-family:Arial;'><center>--RECORD FAILED TO UPDATE--</center></h1>");
+                }
             }
 
         }
         else{
-            response.getWriter().println("Upload Failed");
+            response.getWriter().println("<h1 style='color:red;text-align=center;font-family:Arial;'><center>--RECORD CONTAINS NULL VALUES--</center></h1>");
         }
-
-
-        if(mNamePOST!=null && rDate!=null && genre!=null && rating!=null && ticketPrice!=null && duration!=null && desc!=null && trUrl!=null && imgPath!=null){
-
-            Connection connection=null;
-            Statement statement=null;
-
-            try{
-                Class.forName("com.mysql.jdbc.Driver");
-                connection=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/testmdb","root","");
-                statement=connection.createStatement();
-                String qry="UPDATE movies SET name='"+mNamePOST+"',genre='"+genre+"',release_date='"+rDate+"',rating='"+rating+"'," +
-                        "ticket_price='"+ticketPrice+"',duration='"+duration+"',description='"+desc+"',img_path='"+imgPath+"',url='"+trUrl+"',release_date='"+rDate+"'" +
-                        "WHERE id='"+mID+"'";
-                statement.executeUpdate(qry);
-                response.getWriter().println("Record Updated");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-
     }
 }

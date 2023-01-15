@@ -109,8 +109,10 @@ public class config extends HttpServlet {
         String rating=request.getParameter("rating");
         String ticketPrice=request.getParameter("ticket-price");
         String duration=request.getParameter("duration");
-        String desc=request.getParameter("description");
+        String desc=request.getParameter("description").replaceAll("'","");
         String trUrl=request.getParameter("trailer_url");
+
+        System.out.println(desc);
 
         /* Receive file uploaded to the Servlet from the HTML5 form */
         Part filePart = request.getPart("file");
@@ -140,7 +142,7 @@ public class config extends HttpServlet {
             for (Part part : request.getParts()) {
                 part.write(path +File.separator+ fileName);
             }
-            response.getWriter().println("The file uploaded successfully.");
+            response.getWriter().println("<h1 style='color:green;text-align=center;font-family:Arial;'><center>--FILE WRITE SUCCESS--</center></h1>");
 
             try{
                 File imgFile=new File(path +File.separator+ fileName);
@@ -175,9 +177,11 @@ public class config extends HttpServlet {
                     JSONObject resJson=new JSONObject(sb.toString());
                     System.out.println(resJson.getString("url"));
                     imgPath=resJson.getString("url");
+                    response.getWriter().println("<h1 style='color:green;text-align=center;font-family:Arial;'><center>--FILE SUCCESSFULLY UPLOADED--</center></h1>");
                 }
                 else{
                     System.out.println("Response Failed");
+                    response.getWriter().println("<h1 style='color:red;text-align=center;font-family:Arial;'><center>--RESPONSE FAILED--</center></h1>");
                 }
             }
 
@@ -188,30 +192,44 @@ public class config extends HttpServlet {
 
         }
         else{
-            response.getWriter().println("Upload Failed");
+            response.getWriter().println("<h1 style='color:red;text-align=center;font-family:Arial;'><center>--WRITE FAILED--</center></h1>");
         }
 
 
 
-        if(mNamePOST!=null && rDate!=null && genre!=null && rating!=null && ticketPrice!=null && duration!=null && desc!=null && trUrl!=null && imgPath!=null){
+        if(mNamePOST!=null && rDate!=null && genre!=null && rating!=null && ticketPrice!=null && duration!=null && desc!=null && trUrl!=null && imgPath!=null) {
 
             System.out.println("passed to sql");
 
-            Connection connection=null;
-            Statement statement=null;
-            try{
+            Connection connection = null;
+            Statement statement = null;
+            int flag = 0;
+            try {
                 Class.forName("com.mysql.jdbc.Driver");
-                connection=(Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/testmdb","root","");
-                statement=connection.createStatement();
-                String qry="INSERT INTO movies(name,genre,rating,ticket_price,duration,description,img_path,url,release_date) VALUES('"+mNamePOST+"' , '"+genre+"' , '"+rating+"' , '"+ticketPrice+"' , '"+duration+"' , '"+desc+"' ,'"+imgPath+"' , '"+trUrl+"', '"+rDate+"')";
-                statement.executeUpdate(qry);
-                response.getWriter().println("Record Inserted");
+                connection = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/testmdb", "root", "");
+                statement = connection.createStatement();
+                String qry = "INSERT INTO movies(name,genre,rating,ticket_price,duration,description,img_path,url,release_date) VALUES('" + mNamePOST + "' , '" + genre + "' , '" + rating + "' , '" + ticketPrice + "' , '" + duration + "' , '" + desc + "' ,'" + imgPath + "' , '" + trUrl + "', '" + rDate + "')";
+                flag = statement.executeUpdate(qry);
+                System.out.println(flag);
+
+
             } catch (SQLException e) {
+                response.getWriter().println(e);
                 throw new RuntimeException(e);
             } catch (ClassNotFoundException e) {
                 throw new RuntimeException(e);
+            } finally {
+                if (flag == 1) {
+                    response.getWriter().println("<h1 style='color:green;text-align=center;font-family:Arial;'><center>--RECORD INSERTED--</center></h1>");
+                } else {
+                    response.getWriter().println("<h1 style='color:red;text-align=center;font-family:Arial;'><center>--RECORD FAILED TO INSERT--</center></h1>");
+                }
             }
         }
+        else{
+            response.getWriter().println("<h1 style='color:red;text-align=center;font-family:Arial;'><center>--RECORD CONTAINS NULL VALUES--</center></h1>");
+        }
+
 
     }
 }

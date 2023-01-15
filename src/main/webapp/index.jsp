@@ -159,7 +159,7 @@
                     <div class="rtype"><input type="file"  accept="image/*" class="img" name="file"></div>
                 </div>
                 <div class="rowr div-img">
-                    <img src="img/Man-of-Steel-Character-Poster-Kal-El.jpg" class="dsp-img" id="fetch-img" alt="fetch-img">
+                    <img src="img/cinema-1294496__340.png" class="dsp-img" id="fetch-img" alt="fetch-img">
                 </div>
             </div>
             </form>
@@ -217,7 +217,7 @@
                     <div class="rtype"><input type="file" accept="image/*" class="img" name="file2"></div>
                 </div>
                 <div class="rowr div-img">
-                    <img src="img/Man-of-Steel-Character-Poster-Kal-El.jpg" class="dsp-img" id="search-img" alt="search-img">
+                    <img src="img/cinema-1294496__340.png" class="dsp-img" id="search-img" alt="search-img">
                 </div>
             </div>
             </form>
