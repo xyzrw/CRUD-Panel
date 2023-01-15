@@ -10,22 +10,15 @@
     <title>Config Panel</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.7/css/all.css">
-    <script>
-        function sendRequest(typeName) {
-            const http = new XMLHttpRequest()
+<%--    <script>--%>
+<%--        function sendRequest(typeName) {--%>
+<%--            const http = new XMLHttpRequest()--%>
 
-            http.open("GET", "/config?mName='" + typeName + "'")
-            http.send()
-            // http.onload = () => console.log(http.responseText)
-        }
-        // function sendRequestUpdate(typeName) {
-        //     const http = new XMLHttpRequest()
-        //
-        //     http.open("GET", "/configUpdate?mName='" + typeName + "'")
-        //     http.send()
-        //     // http.onload = () => console.log(http.responseText)
-        // }
-    </script>
+<%--            http.open("GET", "/config?mName='" + typeName + "'")--%>
+<%--            http.send()--%>
+<%--            // http.onload = () => console.log(http.responseText)--%>
+<%--        }--%>
+<%--    </script>--%>
     <script>
         $(document).on("click", "#btn-search", function() {
             $.get("configUpdate?mName2='"+document.getElementsByName('mName2')[0].value+"'", function(responseJson) {
@@ -45,14 +38,16 @@
         });
 
         $(document).on("click", "#btn-fetch", function() {
-            $.get("config", function(responseJson) {
+            $.get("config?mName='"+document.getElementsByName('mName')[0].value+"'", function(responseJson) {
                 $.each(responseJson, function(index, item) {
                     $("#name-txt").val(responseJson[0]);
                     $("#r-date-txt").val(responseJson[1]);
                     $("#rating-txt").val(responseJson[2]);
                     $("#desc-txt").val(responseJson[3]);
                     $("#fetch-img").attr('src',responseJson[4]);
-                    // $("#mNameTxt").val(item);
+                    $("#genre-txt").val(responseJson[5]);
+                    $("#duration-txt").val(responseJson[6]);
+                    $("#trailer_url").val(responseJson[7]);
                 });
             });
         });
@@ -129,7 +124,7 @@
                 </div>
                     <div class="rowl">
                         <div class="rname">Duration:</div>
-                        <div class="rtype"><input type="text" value="Year" class="mxmw" id="duration-txt" name="duration"></div>
+                        <div class="rtype"><input type="text" class="mxmw" id="duration-txt" name="duration"></div>
                     </div>
                 <div class="rowl">
                     <div class="rname">Genre:</div>
@@ -137,14 +132,14 @@
                 </div>
                 <div class="rowl">
                     <div class="rname">Rating:</div>
-                    <div class="rtype"><input type="text" value="Year" class="mxmw"  id="rating-txt" name="rating"></div>
+                    <div class="rtype"><input type="text" class="mxmw"  id="rating-txt" name="rating"></div>
                 </div>
                 <div class="rowl">
                     <div class="rname">Ticket Price:</div>
-                    <div class="rtype"><input type="text" value="Year" class="mxmw" name="ticket-price"></div>
+                    <div class="rtype"><input type="text" class="mxmw" name="ticket-price"></div>
                 </div>
                 <div class="rowr btns">
-                    <div class="rtype-btn"><input type="button" value="Fetch" id="btn-fetch" class="btn-fetch" onclick="sendRequest(document.getElementsByName('mName')[0].value)"></div>
+                    <div class="rtype-btn"><input type="button" value="Fetch" id="btn-fetch" class="btn-fetch" ></div>
                     <div class="rtype-btn"><input type="reset" value="Reset" id="btn-reset" class="btn-reset"></div>
                     <div class="rtype-btn"><input type="submit" value="Submit" id="btn-submit" class="btn-submit"></div>
                 </div>
@@ -157,11 +152,11 @@
                 </div>
                 <div class="rowr">
                     <div class="rname">Trailer Url:</div>
-                    <div class="rtype" ><input type="text" value="Year"  class="mxmw"  name="trailer_url"></div>
+                    <div class="rtype" ><input type="text" id="trailer_url"   class="mxmw"  name="trailer_url"></div>
                 </div>
                 <div class="rowr">
                     <div class="rname">Image:</div>
-                    <div class="rtype"><input type="file" value="Year" accept="image/*" class="img" name="file"></div>
+                    <div class="rtype"><input type="file"  accept="image/*" class="img" name="file"></div>
                 </div>
                 <div class="rowr div-img">
                     <img src="img/Man-of-Steel-Character-Poster-Kal-El.jpg" class="dsp-img" id="fetch-img" alt="fetch-img">
@@ -187,7 +182,7 @@
                     </div>
                     <div class="rowl">
                         <div class="rname">Duration:</div>
-                        <div class="rtype"><input type="text" value="Year" class="mxmw" id="duration-txt2" name="duration2"></div>
+                        <div class="rtype"><input type="text" class="mxmw" id="duration-txt2" name="duration2"></div>
                     </div>
                     <div class="rowl">
                         <div class="rname">Genre:</div>
@@ -195,14 +190,14 @@
                     </div>
                     <div class="rowl">
                         <div class="rname">Rating:</div>
-                        <div class="rtype"><input type="text" value="Year" class="mxmw"  id="rating-txt2" name="rating2"></div>
+                        <div class="rtype"><input type="text" class="mxmw"  id="rating-txt2" name="rating2"></div>
                     </div>
                     <div class="rowl">
                         <div class="rname">Ticket Price:</div>
-                        <div class="rtype"><input type="text" value="Year" class="mxmw" id="tkt-txt" name="ticket-price2"></div>
+                        <div class="rtype"><input type="text" class="mxmw" id="tkt-txt" name="ticket-price2"></div>
                     </div>
                     <div class="rowr btns">
-                        <div class="rtype-btn"><input type="button" value="Search" class="btn-fetch"></div>
+                        <div class="rtype-btn"><input type="button" value="Search" class="btn-fetch" id="btn-search"></div>
                         <div class="rtype-btn"><input type="reset" value="Reset" id="btn-reset" class="btn-reset"></div>
                         <div class="rtype-btn"><input type="submit" value="Submit" id="btn-submit" class="btn-submit"></div>
                     </div>
@@ -215,11 +210,11 @@
                 </div>
                 <div class="rowr">
                     <div class="rname">Trailer Url:</div>
-                    <div class="rtype" ><input type="text" value="Year"  class="mxmw" id="trailer-txt"  name="trailer_url2"></div>
+                    <div class="rtype" ><input type="text"  class="mxmw" id="trailer-txt"  name="trailer_url2"></div>
                 </div>
                 <div class="rowr">
                     <div class="rname">Image:</div>
-                    <div class="rtype"><input type="file" value="Year" accept="image/*" class="img" name="file2"></div>
+                    <div class="rtype"><input type="file" accept="image/*" class="img" name="file2"></div>
                 </div>
                 <div class="rowr div-img">
                     <img src="img/Man-of-Steel-Character-Poster-Kal-El.jpg" class="dsp-img" id="search-img" alt="search-img">
@@ -488,8 +483,8 @@
                     </div>
                 </div>
                 <div class="add-uc">
-                    <div class="add-uc-text-div-id"><p>ID : <span id="spn-id-ns">4000</span></p></div>
-                    <div class="add-uc-text-div"><p>Name : <span id="spn-name-ns">Insterstellar</span></p></div>
+                    <div class="add-uc-text-div-id"><p>ID : <span id="spn-id-ns">____</span></p></div>
+                    <div class="add-uc-text-div"><p>Name : <span id="spn-name-ns">____________</span></p></div>
                     <div class="add-form-uc-div">
                         <form action="configNS" method="get" name="add-form-uc">
                             <input type="hidden" name="AddReady" value="1">

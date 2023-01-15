@@ -43,26 +43,52 @@ public class config extends HttpServlet {
 
         try{
             if(mName!=null) {
+
+                //First request : get movie ID from the search results
+                HttpRequest getRequestId = HttpRequest.newBuilder()
+                        .uri(new URI("https://api.themoviedb.org/3/search/movie?api_key=74ece71f29099445edc28c01f029bea5&query="+mName+""))
+                        .build();
+
+                HttpClient httpClientId = HttpClient.newHttpClient();
+                HttpResponse<String> getResponseId = httpClientId.send(getRequestId, HttpResponse.BodyHandlers.ofString());
+
+                JSONObject jsonId = new JSONObject(getResponseId.body());
+                JSONArray jsonArrayId = (JSONArray) jsonId.get("results");
+                JSONObject jsonObjectId = (JSONObject) jsonArrayId.get(0);
+
+                //Second request : fetch full movie details using movie ID
                 HttpRequest getRequest = HttpRequest.newBuilder()
-                        .uri(new URI("https://api.themoviedb.org/3/search/multi?api_key=74ece71f29099445edc28c01f029bea5&query='"+mName+"'"))
+                        .uri(new URI("https://api.themoviedb.org/3/movie/"+ jsonObjectId.getInt("id") +"?api_key=74ece71f29099445edc28c01f029bea5"))
                         .build();
 
                 HttpClient httpClient = HttpClient.newHttpClient();
                 HttpResponse<String> getResponse = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofString());
 
+
                 JSONObject json = new JSONObject(getResponse.body());
-                JSONArray jsonArray = (JSONArray) json.get("results");
-                JSONObject jsonObject = (JSONObject) jsonArray.get(0);
 
+                //First 2 genres from response JSON
+                String genreJson =  json.getJSONArray("genres").getJSONObject(0).getString("name")+"/"+
+                                    json.getJSONArray("genres").getJSONObject(1).getString("name");
+
+                //Runtime in minutes
+                int runtime=json.getInt("runtime");
+
+                //Adding data to a list
                 List<String> list=new ArrayList<>();
-                list.add(jsonObject.getString("title"));
-                list.add(jsonObject.getString("release_date"));
-                list.add(String.valueOf(jsonObject.getDouble("vote_average")));
-                list.add(jsonObject.getString("overview"));
-                list.add("https://image.tmdb.org/t/p/original"+jsonObject.getString("poster_path"));
+                list.add(json.getString("title"));
+                list.add(json.getString("release_date"));
+                list.add(String.valueOf(json.getDouble("vote_average")));
+                list.add(json.getString("overview"));
+                list.add("https://image.tmdb.org/t/p/original"+json.getString("poster_path"));
+                list.add(genreJson);
+                list.add(runtime/60+"h "+runtime%60+"m");
+                list.add("https://www.youtube.com/embed/");
 
+                //passing the list as a json object to a string variable
                 String jsonArrRes= new JSONArray(list).toString();
 
+                //sending the data as json
                 response.setContentType("application/json");
                 response.setCharacterEncoding("UTF-8");
                 response.getWriter().write(jsonArrRes);
@@ -164,8 +190,6 @@ public class config extends HttpServlet {
         else{
             response.getWriter().println("Upload Failed");
         }
-
-
 
 
 

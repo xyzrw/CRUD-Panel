@@ -22,11 +22,10 @@ html, body, html * {
     list-style-type: none;
     /*margin: 0;*/
     padding: 0;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
     width:70%;
     height: auto;
-    margin-left: auto;
-    margin-right: auto;
+      margin: 0.5% auto 0.2%;
   }
   
   .tab {
@@ -36,19 +35,28 @@ html, body, html * {
     width:14vw;
     font-size: 1vw;
     border: none;
-    background-color: #BFEAF5;
+    background-color: #3C4048;
+    color:white;
+    border-right: 2px solid white;
   }
   
   .tab.active {
-    background-color: #0A2647;
+    /*background-color: white;*/
+    color: #393E46;
+      background: linear-gradient(#ffffff, #ffffff) 50% 50%/calc(100% - 10px) calc(100% - 10px) no-repeat,
+      linear-gradient(266deg, #3c0af7 0%, #05f0c1 100%);
+      border-radius: 0px;
+      padding: 12px;
+      box-sizing: border-box;
+      height:3.5vw;
   }
   
   .tab:hover {
-    background-color: #2C74B3;
+    background-color: black;
   }
   
   .tab-content {
-    border:1px solid black;
+    /*border:1px solid black;*/
     width: 70vw;
     height: 90vh;
     margin-left: auto;
