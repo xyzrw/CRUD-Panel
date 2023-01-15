@@ -52,18 +52,22 @@ public class configUpdate extends HttpServlet {
             resultSet=statement.executeQuery("SELECT * FROM movies WHERE name LIKE '"+"%"+mName+"%"+"' ");
             resultSet.next();
 
+            System.out.println(resultSet.getString(2));
+
             List<String> list=new ArrayList<>();
 
-            mID=Integer.parseInt(resultSet.getString(1));
-            list.add(resultSet.getString(2));
-            list.add(resultSet.getString(4));
-            list.add(resultSet.getString(5));
-            list.add(resultSet.getString(6));
-            list.add(resultSet.getString(7));
-            list.add(resultSet.getString(8));
-            list.add(resultSet.getString(9));
-            list.add(resultSet.getString(10));
-            list.add(resultSet.getString(11));
+            mID=Integer.parseInt(resultSet.getString("id"));
+            list.add(resultSet.getString("name"));
+            list.add(resultSet.getString("img_path"));
+            list.add(resultSet.getString("release_date"));
+            list.add(resultSet.getString("genre"));
+            list.add(resultSet.getString("rating"));
+            list.add(resultSet.getString("duration"));
+            list.add(resultSet.getString("description"));
+            list.add(resultSet.getString("url"));
+            list.add(resultSet.getString("ticket_price"));
+
+            System.out.println(list);
 
             String jsonArrRes= new JSONArray(list).toString();
 
